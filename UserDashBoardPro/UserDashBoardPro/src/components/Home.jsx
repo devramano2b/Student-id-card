@@ -29,8 +29,12 @@ function UI() {
 
 function CreateUser() {
   const [modal, setModal] = useState(false);
+  const [buttonText, setButtonText] = useState("Create User");
+
+  //
   const toggleModal = () => {
     setModal(!modal);
+    setButtonText(modal ? "Create User" : "Home");
   };
   return (
     <>
@@ -40,9 +44,10 @@ function CreateUser() {
         onClick={toggleModal}
         style={{
           fontWeight: "600",
+          boxShadow: " 2px 4px 6px rgba(0,0,0,0.3)",
         }}
       >
-        Create User
+        {buttonText}
       </button>
       <FormModal isOpen={modal} onClose={toggleModal} />
     </>
@@ -55,7 +60,12 @@ function Navbar({ children }) {
       <nav className="navbar bg-body-tertiary">
         <div className="container">
           <a className="navbar-brand" href="#">
-            <FontAwesomeIcon icon={faHouse} size="2x" title="Home Page" />
+            <FontAwesomeIcon
+              icon={faHouse}
+              size="2x"
+              title="Home Page"
+              style={{ boxShadow: " 2px 3px 5px rgba(221, 196, 196, 0.3)" }}
+            />
           </a>
           {children}
         </div>
