@@ -98,6 +98,7 @@ export default function FormModal({ isOpen, onClose }) {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  required
                 />
               </div>
               {/* ------------------Email Input------------- */}
@@ -114,6 +115,7 @@ export default function FormModal({ isOpen, onClose }) {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  required
                 />
               </div>
               {/* ------------------Dept Input------------ */}
@@ -130,6 +132,7 @@ export default function FormModal({ isOpen, onClose }) {
                   name="department"
                   value={formData.department}
                   onChange={handleChange}
+                  required
                 />
               </div>
 

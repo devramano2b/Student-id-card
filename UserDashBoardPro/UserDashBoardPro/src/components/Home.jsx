@@ -4,6 +4,8 @@ import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import FormModal from "./FormModal";
 
+import TableView from "./TableView";
+
 export default function Home() {
   return (
     <>
@@ -19,6 +21,7 @@ function UI() {
         <Navbar>
           <CreateUser />
         </Navbar>
+        <TableView />
       </div>
     </>
   );
@@ -35,6 +38,9 @@ function CreateUser() {
         type="button"
         className="btn btn-primary createUser btn-modal"
         onClick={toggleModal}
+        style={{
+          fontWeight: "600",
+        }}
       >
         Create User
       </button>
