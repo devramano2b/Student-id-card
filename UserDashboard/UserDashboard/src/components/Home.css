@@ -1,0 +1,42 @@
+.body{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.homepage-div{
+max-width: 100%;
+    border: 2px solid black;
+    min-height: 82vh;
+    border-radius: 8px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.createuser-heading{
+
+   top: 5px;
+   
+
+}
+/* ------------------modal window----------------------- */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  min-width: 400px;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}

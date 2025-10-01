@@ -1,0 +1,17 @@
+.ui-first {
+    border: 2px solid black;
+   min-width:  98%;
+    min-height: 85vh;
+    border-radius: 8px;
+    box-shadow:
+    0 0 5px #0ff,
+    0 0 8px rgb(243, 255, 112),
+    0 0 6px #0ff;
+    overflow-x: hidden; 
+    overflow-y: auto;
+
+}
+.createUser{
+    position: relative;
+
+}
