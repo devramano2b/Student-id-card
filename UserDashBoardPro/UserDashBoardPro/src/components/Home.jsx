@@ -1,7 +1,7 @@
 import "./Home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FormModal from "./FormModal";
 
 import TableView from "./TableView";
@@ -15,32 +15,83 @@ export default function Home() {
 }
 
 function UI() {
+  const [users, setUsers] = useState([]);
+  const [showCreate, setShowCreate] = useState(false);
+  const [fadeClass, setFadeClass] = useState("fade-in");
+
+  useEffect(() => {
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+    setUsers(storedUsers);
+  }, []);
+
+  const updateUsers = (newUsers) => {
+    setUsers(newUsers);
+    localStorage.setItem("users", JSON.stringify(newUsers));
+  };
+  //
+
+  //
+  const toggleCreateUser = () => {
+    setFadeClass("fade-out");
+    setTimeout(() => {
+      setShowCreate(!showCreate);
+      setFadeClass("fade-in");
+    }, 400);
+  };
+
+  //
+  //
   return (
     <>
       <div className="ui-first container">
         <Navbar>
-          <CreateUser />
+          <CreateUser
+            showCreate={showCreate}
+            setShowCreate={setShowCreate}
+            toggleCreateUser={toggleCreateUser}
+          />
         </Navbar>
-        <TableView />
+
+        <div className={`fade-wrapper ${fadeClass}`}>
+          {showCreate ? (
+            //animation
+
+            <FormModal
+              isOpen={true}
+              onClose={() => setShowCreate(false)}
+              users={users}
+              setUsers={updateUsers}
+            />
+          ) : (
+            <TableView users={users} setUsers={updateUsers} />
+          )}
+        </div>
       </div>
     </>
   );
 }
 
-function CreateUser() {
+function CreateUser({ showCreate, setShowCreate, toggleCreateUser }) {
   const [modal, setModal] = useState(false);
   const [buttonText, setButtonText] = useState("Create User");
 
   //
   const toggleModal = () => {
+    toggleCreateUser();
     setModal(!modal);
     setButtonText(modal ? "Create User" : "Home");
+    setShowCreate(!showCreate);
   };
+
+  //
+  //
+  //
   return (
     <>
       <button
         type="button"
-        className="btn btn-primary createUser btn-modal"
+        className="btn btn-primary createUser btn-modal btn-hover-effect"
         onClick={toggleModal}
         style={{
           fontWeight: "600",
@@ -49,7 +100,6 @@ function CreateUser() {
       >
         {buttonText}
       </button>
-      <FormModal isOpen={modal} onClose={toggleModal} />
     </>
   );
 }

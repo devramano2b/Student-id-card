@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { v4 as uuid4 } from "uuid";
+
+//
 export default function FormModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     department: "",
   });
+
   if (!isOpen) return null;
   // ---------------------handle Change -------------------------
   const handleChange = (e) => {
@@ -19,11 +23,21 @@ export default function FormModal({ isOpen, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    //Adding new user
+    const newUser = {
+      id: uuid4(),
+      name: formData.name,
+      email: formData.email,
+      department: formData.department,
+    };
+
     //store the local storage
     const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
 
+    const updated = [...existingUsers, newUser];
     //add new user
-    localStorage.setItem("users", JSON.stringify([...existingUsers, formData]));
+    localStorage.setItem("users", JSON.stringify(updated));
 
     //optional actions after storing
 
@@ -154,6 +168,7 @@ export default function FormModal({ isOpen, onClose }) {
                 <button
                   className="btn btn-primary w-25 "
                   onClick={handleSubmit}
+                  type="submit"
                 >
                   Submit
                 </button>

@@ -1,27 +1,31 @@
-import { useState, useEffect } from "react";
-export default function TableView() {
-  const [users, setUsers] = useState([]);
+import { useState } from "react";
+export default function TableView({ users, setUsers }) {
+  // const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
 
   //Show or Load the users from the local Storage when component mounts
 
-  useEffect(() => {
-    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-    setUsers(storedUsers);
-  }, []);
+  // useEffect(() => {
+  //   const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+  //   setUsers(storedUsers);
+  // }, [users]);
 
-  // handle user event handleer
+  // handle user event handler
 
   function handleUser(user) {
     setSelectedUser(user);
   }
 
+  function handleClose() {
+    setSelectedUser(null);
+  }
   // handleDelete
   function handleDelete(id) {
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const updated = storedUsers.filter((u) => u.id !== id);
-    localStorage.setItem("users", JSON.stringify(updated));
-    setUsers(updated);
+
+    const updatedUsers = storedUsers.filter((u) => u.id !== id);
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    setUsers(updatedUsers);
   }
 
   //
@@ -52,7 +56,7 @@ export default function TableView() {
                   <td>
                     <button
                       type="button"
-                      className="btn btn-warning"
+                      className="btn btn-warning btn-hover-effects"
                       onClick={() => handleUser(user)}
                       style={{
                         fontWeight: "500",
@@ -65,7 +69,7 @@ export default function TableView() {
                   <td>
                     <button
                       type="button"
-                      className="btn btn-danger"
+                      className="btn btn-danger  btn-hover-effects"
                       onClick={() => handleDelete(user.id)}
                       style={{
                         fontWeight: "500",
@@ -80,7 +84,7 @@ export default function TableView() {
             </tbody>
           </table>
         )}
-        {selectedUser && <UserView user={selectedUser} />}
+        {selectedUser && <UserView user={selectedUser} onClose={handleClose} />}
       </div>
     </>
   );
@@ -96,15 +100,8 @@ React re-renders and shows <UserView user={selectedUser} /> below the table.
 You can style this as a card, modal, or inline detail view.*/
 }
 
-function UserView({ user }) {
-  const [view, setView] = useState(user);
-
-  //close the view
-  function closeView(user) {
-    if (view === user) {
-      setView(null);
-    }
-  }
+function UserView({ user, onClose }) {
+  // const [view, setView] = useState(user);
 
   return (
     <>
@@ -121,7 +118,7 @@ function UserView({ user }) {
           <button
             type="button"
             className="btn btn-danger w-25"
-            onClick={closeView(user)}
+            onClick={onClose}
             style={{
               fontWeight: "700",
               boxShadow: " 2px 4px 6px rgba(0,0,0,0.3)",
@@ -132,23 +129,23 @@ function UserView({ user }) {
           </button>
         </div>
         <div className="card-body">
-          <ul class="list-group">
-            <li class="list-group-item list-group-item-primary">
+          <ul className="list-group">
+            <li className="list-group-item list-group-item-primary">
               {" "}
               <label>Name: </label> <span> {user.name}</span>
             </li>
-            <li class="list-group-item list-group-item-primary">
+            <li className="list-group-item list-group-item-primary">
               {" "}
               <label>Email:</label> <span> {user.email}</span>
             </li>
-            <li class="list-group-item list-group-item-primary">
+            <li className="list-group-item list-group-item-primary">
               {" "}
               <label>Department:</label> <span> {user.department}</span>
             </li>
           </ul>
         </div>
       </div>
-      {view && <UserView user={setView} />}
+      {/* {view && <UserView user={setView} />} */}
     </>
   );
 }
